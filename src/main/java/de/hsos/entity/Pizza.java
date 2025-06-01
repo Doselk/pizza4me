@@ -14,5 +14,30 @@ public class Pizza {
 
     private String name;
     private BigDecimal preis;
+    private String beschreibung;
 
+    public Pizza() {
+    }
+
+    public Pizza(String name, String beschreibung, double preis) {
+        this.name = name;
+        this.beschreibung = beschreibung;
+        this.preis = BigDecimal.valueOf(preis);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BigDecimal getPreis() {
+        return preis;
+    }
+
+    public String getBeschreibung() {
+        return beschreibung;
+    }
 }
