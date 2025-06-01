@@ -3,6 +3,9 @@ package de.hsos.entity;
 import jakarta.enterprise.inject.Vetoed;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Vetoed
 public class Kunde {
@@ -15,6 +18,9 @@ public class Kunde {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Adresse adresse;
+
+    @OneToMany(mappedBy = "kunde", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bestellung> bestellungen = new ArrayList<>();
 
     public Kunde() {
     }
