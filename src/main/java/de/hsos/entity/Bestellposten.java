@@ -18,6 +18,4 @@ public class Bestellposten {
 
     @ManyToOne
     private Bestellung bestellung;
-
-    // Getter, Setter, Konstruktoren …
 }
