@@ -10,6 +10,10 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+
 @ApplicationScoped
 public class BestellungenRepository implements BestellungenVerwalter {
 
@@ -33,5 +37,15 @@ public class BestellungenRepository implements BestellungenVerwalter {
         } else {
             throw new IllegalArgumentException("Bestellung mit ID " + bestellId + " nicht gefunden.");
         }
+    }
+
+    @Override
+    public Optional<Bestellung> getBestellungById(Long bestellId) {
+        return Optional.ofNullable(em.find(Bestellung.class, bestellId));
+    }
+
+    @Override
+    public Collection<Bestellung> getAllBestellungen() {
+        return em.createQuery("select b from Bestellung b", Bestellung.class).getResultList();
     }
 }

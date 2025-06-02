@@ -40,4 +40,8 @@ public record PizzaDTO(
                 pizza.getBeschreibung()
         );
     }
+
+    public Pizza toPizza() {
+        return new Pizza(name, beschreibung, preis);
+    }
 }

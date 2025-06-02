@@ -1,6 +1,8 @@
 package de.hsos.boundary;
 
+import de.hsos.boundary.dto.BestellpostenDTO;
 import de.hsos.boundary.dto.BestellungDTO;
+import de.hsos.boundary.dto.PizzaDTO;
 import de.hsos.control.BestellungenVerwalter;
 import de.hsos.entity.Pizza;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -10,6 +12,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+
+import java.util.Collection;
 
 @Path("bestellung")
 @ApplicationScoped

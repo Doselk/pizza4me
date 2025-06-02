@@ -1,7 +1,11 @@
 package de.hsos.control;
 
 import de.hsos.boundary.dto.BestellungDTO;
+import de.hsos.entity.Bestellung;
 import de.hsos.entity.Pizza;
+
+import java.util.Collection;
+import java.util.Optional;
 
 public interface BestellungenVerwalter {
 
@@ -20,4 +24,7 @@ public interface BestellungenVerwalter {
      * @param pizza die hinzuzufügende Pizza
      */
     void pizzaHinzufuegen(Long bestellId, int menge, Pizza pizza);
+
+    Optional<Bestellung> getBestellungById(Long bestellId);
+    Collection<Bestellung> getAllBestellungen();
 }

@@ -1,5 +1,6 @@
 package de.hsos.boundary.dto;
 
+import de.hsos.entity.Bestellposten;
 import de.hsos.entity.Bestellung;
 import de.hsos.entity.Pizza;
 import jakarta.json.bind.annotation.JsonbCreator;
@@ -23,5 +24,9 @@ public record BestellpostenDTO(
         Objects.requireNonNull(id);
         Objects.requireNonNull(pizza);
         Objects.requireNonNull(bestellung);
+    }
+
+    public Bestellposten toBestellposten(){
+        return new Bestellposten(pizza, menge, bestellung);
     }
 }
