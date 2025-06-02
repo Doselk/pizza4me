@@ -19,10 +19,10 @@ public class Pizza {
     public Pizza() {
     }
 
-    public Pizza(String name, String beschreibung, double preis) {
+    public Pizza(String name, String beschreibung, BigDecimal preis) {
         this.name = name;
         this.beschreibung = beschreibung;
-        this.preis = BigDecimal.valueOf(preis);
+        this.preis = preis;
     }
 
     public Long getId() {
