@@ -1,5 +1,6 @@
 package de.hsos.gateway;
 
+import de.hsos.boundary.dto.UpdatePizzaDTO;
 import de.hsos.control.PizzenVerwalter;
 import de.hsos.entity.Pizza;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -37,14 +38,15 @@ public class PizzenRepository implements PizzenVerwalter {
     }
 
     @Override
-    public void aktualisierenPizza(String name, String neueBeschreibung, BigDecimal neuerPreis) {
-        Pizza pizza = em.createQuery("SELECT p FROM Pizza p WHERE p.name = :name", Pizza.class)
-                        .setParameter("name", name)
-                        .getSingleResult();
-        if (pizza != null) {
-            pizza = new Pizza(name, neueBeschreibung, neuerPreis);
-            em.merge(pizza);
-        }
+    public boolean aktualisierePizza(Long id, UpdatePizzaDTO dto) {
+        Pizza pizza = em.find(Pizza.class, id);
+        if(pizza == null) return false;
+
+        if(dto.name() != null) pizza.setName(dto.name());
+        if(dto.beschreibung() != null) pizza.setBeschreibung(dto.beschreibung());
+        if(dto.preis() != null) pizza.setPreis(dto.preis());
+
+        return true;
     }
 
     @Override

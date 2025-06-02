@@ -2,6 +2,7 @@ package de.hsos.boundary;
 
 import de.hsos.boundary.dto.NeuPizzaDTO;
 import de.hsos.boundary.dto.PizzaDTO;
+import de.hsos.boundary.dto.UpdatePizzaDTO;
 import de.hsos.control.PizzenVerwalter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -69,6 +70,26 @@ public class PizzenResource {
         }
     }
 
+    @PATCH
+    @Path("/{id}")
+    @Operation(summary = "Pizza aktualisieren")
+    public Response patchPizza(@PathParam("id") Long id, UpdatePizzaDTO updateDTO){
+        try {
+            boolean aktualisiert = pizzenVerwalter.aktualisierePizza(id, updateDTO);
+            if (!aktualisiert) {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Pizza mit ID " + id + " nicht gefunden.")
+                        .build();
+            }
+            return Response.noContent().build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Fehler beim Aktualisieren der Pizza: " + e.getMessage())
+                    .build();
+        }
+    }
+
+
     @DELETE
     @Path("/{id}")
     @Operation(summary = "Pizza Löschen")
@@ -88,5 +109,4 @@ public class PizzenResource {
                     .build();
         }
     }
-
 }

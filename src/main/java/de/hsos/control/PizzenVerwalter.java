@@ -1,5 +1,6 @@
 package de.hsos.control;
 
+import de.hsos.boundary.dto.UpdatePizzaDTO;
 import de.hsos.entity.Pizza;
 
 import java.math.BigDecimal;
@@ -12,7 +13,7 @@ public interface PizzenVerwalter {
 
     boolean entfernenPizza(Long id);
 
-    void aktualisierenPizza(String name, String neueBeschreibung, BigDecimal neuerPreis);
+    boolean aktualisierePizza(Long id, UpdatePizzaDTO dto);
 
     String getPizzaDetails(String name);
 
