@@ -1,5 +1,6 @@
 package de.hsos.boundary;
 
-public class BestellungenResource {
+import de.hsos.entity.Pizza;
 
+public class BestellungenResource {
 }

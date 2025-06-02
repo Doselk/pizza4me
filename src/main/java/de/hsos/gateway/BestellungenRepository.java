@@ -5,6 +5,7 @@ import de.hsos.boundary.dto.NeuPizzaDTO;
 import de.hsos.control.BestellungenVerwalter;
 import de.hsos.entity.Bestellposten;
 import de.hsos.entity.Bestellung;
+import de.hsos.entity.Pizza;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
@@ -21,10 +22,10 @@ public class BestellungenRepository implements BestellungenVerwalter {
     }
 
     @Override
-    public void pizzaHinzufuegen(Long bestellId, NeuPizzaDTO pizza) {
+    public void pizzaHinzufuegen(Long bestellId, int menge, Pizza pizza) {
         Bestellung bestellung = em.find(Bestellung.class, bestellId);
         if (bestellung != null) {
-            Bestellposten neuerPosten = new Bestellposten(pizza.getName(), pizza.getBeschreibung(), pizza.getPreis());
+            Bestellposten neuerPosten = new Bestellposten(pizza, menge, bestellung);
             bestellung.addBestellposten(neuerPosten);
             em.persist(neuerPosten);
         } else {

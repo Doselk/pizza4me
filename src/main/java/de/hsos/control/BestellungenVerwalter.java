@@ -1,8 +1,7 @@
 package de.hsos.control;
 
 import de.hsos.boundary.dto.BestellungDTO;
-import de.hsos.boundary.dto.NeuPizzaDTO;
-import de.hsos.boundary.dto.NeuadresseDTO;
+import de.hsos.entity.Pizza;
 
 public interface BestellungenVerwalter {
 
@@ -20,5 +19,5 @@ public interface BestellungenVerwalter {
      * @param bestellId die ID der Bestellung, zu der die Pizza hinzugefügt werden soll
      * @param pizza die hinzuzufügende Pizza
      */
-    void pizzaHinzufuegen(Long bestellId, NeuPizzaDTO pizza);
+    void pizzaHinzufuegen(Long bestellId, int menge, Pizza pizza);
 }
