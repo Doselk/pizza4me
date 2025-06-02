@@ -6,9 +6,11 @@ import de.hsos.control.BestellungenVerwalter;
 import de.hsos.entity.Bestellposten;
 import de.hsos.entity.Bestellung;
 import de.hsos.entity.Pizza;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
+@ApplicationScoped
 public class BestellungenRepository implements BestellungenVerwalter {
 
     @Inject
