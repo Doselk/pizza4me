@@ -1,15 +1,15 @@
 package de.hsos.boundary.dto;
 
 import de.hsos.entity.Adresse;
+import jakarta.json.bind.annotation.JsonbCreator;
 
-public class AdresseDTO {
-    private String strasse;
-    private String plz;
-    private String ort;
-    private Integer hausnummer;
-
-    public AdresseDTO() {}
-
+public record AdresseDTO(
+        String strasse,
+        String plz,
+        String ort,
+        Integer hausnummer
+) {
+    @JsonbCreator
     public AdresseDTO(String strasse, String plz, String ort, Integer hausnummer) {
         this.strasse = strasse;
         this.plz = plz;
@@ -24,10 +24,5 @@ public class AdresseDTO {
     public Adresse toAdresse() {
         return new Adresse(strasse, plz, ort, hausnummer);
     }
-
-    public String getStrasse() { return strasse; }
-    public String getPlz() { return plz; }
-    public String getOrt() { return ort; }
-    public Integer getHausnummer() { return hausnummer; }
 }
 

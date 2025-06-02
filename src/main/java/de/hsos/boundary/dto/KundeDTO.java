@@ -7,18 +7,16 @@ import jakarta.json.bind.annotation.JsonbCreator;
 import jakarta.json.bind.annotation.JsonbProperty;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-public class KundeDTO {
+public record KundeDTO(
     @Schema(description = "Eindeutige ID des Kunden")
-    private Long id;
+    Long id,
     @Schema(description = "Vorname des Kunden")
-    private String vorname;
+    String vorname,
     @Schema(description = "Nachname des Kunden")
-    private String nachname;
+    String nachname,
     @Schema(description = "Adresse des Kunden")
-    private AdresseDTO adresse;
-
-    public KundeDTO() {
-    }
+    AdresseDTO adresse
+) {
 
     @JsonbCreator
     public KundeDTO(Long id, String vorname, String nachname, AdresseDTO adresse) {
@@ -33,19 +31,4 @@ public class KundeDTO {
         AdresseDTO adresseDTO = adresse != null ? AdresseDTO.from(adresse) : null;
         return new KundeDTO(kunde.getId(), kunde.getVorname(), kunde.getNachname(), adresseDTO);
     }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getVorname() {
-        return vorname;
-    }
-
-    public String getNachname() {
-        return nachname;
-    }
-
-    public AdresseDTO getAdresse() { return adresse; }
 }
