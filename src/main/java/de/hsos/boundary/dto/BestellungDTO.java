@@ -1,5 +1,6 @@
 package de.hsos.boundary.dto;
 
+import de.hsos.entity.Bestellung;
 import de.hsos.entity.Kunde;
 import de.hsos.entity.Status;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -12,5 +13,7 @@ public record BestellungDTO(
     @Schema(description = "Status der Bestellung")
     Status status
 ) {
-
+    public static BestellungDTO toDTO(Bestellung bestellung) {
+        return new BestellungDTO(bestellung.getId(), bestellung.getKunde(), bestellung.getStatus());
+    }
 }

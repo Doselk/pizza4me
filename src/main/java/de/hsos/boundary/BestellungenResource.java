@@ -24,6 +24,16 @@ public class BestellungenResource {
     @Inject
     BestellungenVerwalter bestellungenVerwalter;
 
+    @GET
+    @Operation(summary = "Alle Bestellungen holen")
+    public Response getBestellungen() {
+        Collection<BestellungDTO> bestellungen = bestellungenVerwalter.getAllBestellungen()
+                .stream()
+                .map(BestellungDTO::toDTO)
+                .toList();
+        return Response.ok(bestellungen).build();
+    }
+
     @POST
     @Operation(summary = "Neue Bestellung anlegen")
     public Response createBestellung(BestellungDTO bestellung) {
