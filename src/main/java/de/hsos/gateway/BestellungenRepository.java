@@ -5,6 +5,7 @@ import de.hsos.boundary.dto.NeuPizzaDTO;
 import de.hsos.control.BestellungenVerwalter;
 import de.hsos.entity.Bestellposten;
 import de.hsos.entity.Bestellung;
+import de.hsos.entity.Kunde;
 import de.hsos.entity.Pizza;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -21,11 +22,17 @@ public class BestellungenRepository implements BestellungenVerwalter {
     EntityManager em;
 
     @Override
-    public Long bestellungAnlegen(BestellungDTO bestellung) {
-        Bestellung neueBestellung = new Bestellung();
-        em.persist(neueBestellung);
-        return neueBestellung.getId();
+    public Long bestellungAnlegen(Long kundenId) {
+        Kunde kunde = em.find(Kunde.class, kundenId);
+        if (kunde == null) {
+            throw new IllegalArgumentException("Kunde nicht gefunden");
+        }
+
+        Bestellung bestellung = new Bestellung(kunde);
+        em.persist(bestellung);
+        return bestellung.getId();
     }
+
 
     @Override
     public void pizzaHinzufuegen(Long bestellId, int menge, Pizza pizza) {

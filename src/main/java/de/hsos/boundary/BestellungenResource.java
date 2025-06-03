@@ -2,6 +2,7 @@ package de.hsos.boundary;
 
 import de.hsos.boundary.dto.BestellpostenDTO;
 import de.hsos.boundary.dto.BestellungDTO;
+import de.hsos.boundary.dto.NeueBestellungDTO;
 import de.hsos.boundary.dto.PizzaDTO;
 import de.hsos.control.BestellungenVerwalter;
 import de.hsos.entity.Pizza;
@@ -36,9 +37,10 @@ public class BestellungenResource {
 
     @POST
     @Operation(summary = "Neue Bestellung anlegen")
-    public Response createBestellung(BestellungDTO bestellung) {
-        Long bestellId = bestellungenVerwalter.bestellungAnlegen(bestellung);
+    public Response createBestellung(NeueBestellungDTO dto) {
+        Long bestellId = bestellungenVerwalter.bestellungAnlegen(dto.kundenId());
         return Response.status(Response.Status.CREATED).entity(bestellId).build();
     }
+
 
 }

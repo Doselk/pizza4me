@@ -12,10 +12,10 @@ public interface BestellungenVerwalter {
     /**
      * Erstellt eine neue Bestellung.
      *
-     * @param bestellung die zu erstellende Bestellung
+     * @param kundenId die zu erstellende Bestellung
      * @return die ID der neu erstellten Bestellung
      */
-    Long bestellungAnlegen(BestellungDTO bestellung);
+    Long bestellungAnlegen(Long kundenId);
 
     /**
      * Fügt eine neue Pizza zu einer bestehenden Bestellung hinzu.
