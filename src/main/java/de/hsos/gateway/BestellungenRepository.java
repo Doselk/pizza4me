@@ -35,8 +35,13 @@ public class BestellungenRepository implements BestellungenVerwalter {
 
 
     @Override
-    public void pizzaHinzufuegen(Long bestellId, int menge, Pizza pizza) {
+    public void pizzaHinzufuegen(Long bestellId, int menge, Long pizzaId) {
         Bestellung bestellung = em.find(Bestellung.class, bestellId);
+        Pizza pizza = em.find(Pizza.class, pizzaId);
+        System.out.printf("Hinzufügen: Bestellung-ID=%d, Pizza-ID=%d, Menge=%d%n", bestellId, pizzaId, menge);
+        System.out.println("Bestellung gefunden? " + (bestellung != null));
+        System.out.println("Pizza gefunden? " + (pizza != null));
+
         if (bestellung != null) {
             Bestellposten neuerPosten = new Bestellposten(pizza, menge, bestellung);
             bestellung.addBestellposten(neuerPosten);

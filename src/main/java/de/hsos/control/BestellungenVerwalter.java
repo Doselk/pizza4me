@@ -21,9 +21,9 @@ public interface BestellungenVerwalter {
      * Fügt eine neue Pizza zu einer bestehenden Bestellung hinzu.
      *
      * @param bestellId die ID der Bestellung, zu der die Pizza hinzugefügt werden soll
-     * @param pizza die hinzuzufügende Pizza
+     * @param pizzaId die hinzuzufügende Pizza
      */
-    void pizzaHinzufuegen(Long bestellId, int menge, Pizza pizza);
+    void pizzaHinzufuegen(Long bestellId, int menge, Long pizzaId);
 
     Optional<Bestellung> getBestellungById(Long bestellId);
     Collection<Bestellung> getAllBestellungen();

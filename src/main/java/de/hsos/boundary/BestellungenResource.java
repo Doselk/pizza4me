@@ -1,9 +1,6 @@
 package de.hsos.boundary;
 
-import de.hsos.boundary.dto.BestellpostenDTO;
-import de.hsos.boundary.dto.BestellungDTO;
-import de.hsos.boundary.dto.NeueBestellungDTO;
-import de.hsos.boundary.dto.PizzaDTO;
+import de.hsos.boundary.dto.*;
 import de.hsos.control.BestellungenVerwalter;
 import de.hsos.entity.Pizza;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -42,5 +39,12 @@ public class BestellungenResource {
         return Response.status(Response.Status.CREATED).entity(bestellId).build();
     }
 
+    @PATCH
+    @Path("/{id}")
+    @Operation(summary = "Füge eine Pizza einer Bestellung hinzu")
+    public Response addPizza(@PathParam("id") Long id, NeuBestellpostenDTO dto) {
+        bestellungenVerwalter.pizzaHinzufuegen(id, dto.menge(), dto.pizzaId());
+        return Response.ok().build();
+    }
 
 }
