@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin – Pizzen verwalten</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    nav {
+      background-color: #ff6347;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    nav .user-info {
+      font-size: 1rem;
+    }
+
+    .pizzen-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem 2rem;
+    }
+
+    .pizza-card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1rem;
+      width: 250px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .pizza-card h2 {
+      margin-top: 0;
+    }
+
+    .pizza-card button {
+      margin-top: 0.5rem;
+      padding: 0.4rem 1rem;
+      background-color: #ff6347;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .pizza-card button:hover {
+      background-color: #e5533d;
+    }
+
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Pizza4Me (Admin)</div>
+  <form action="/logout" method="get">
+    <button type="submit">Abmelden</button>
+  </form>
+</nav>
+
+<h1 style="padding: 0 2rem;">Alle Pizzen verwalten</h1>
+
+<!-- Pizza hinzufügen Formular -->
+<form action="/admin/pizzen/neu-pizza-hinzufuegen" method="post" style="padding: 1rem 2rem;">
+  <h2>Neue Pizza erstellen</h2>
+  <label>Name: <input type="text" name="name" required></label><br>
+  <label>Beschreibung: <input type="text" name="beschreibung" required></label><br>
+  <label>Preis: <input type="number" name="preis" step="0.01" required></label><br>
+  <button type="submit">Erstellen</button>
+</form>
+
+<!-- Bestehende Pizzen -->
+<div class="pizzen-container">
+  {#for pizza in pizzen}
+    <div class="pizza-card">
+      <h2>{pizza.name}</h2>
+      <p>{pizza.beschreibung}</p>
+      <p><strong>{pizza.preis} €</strong></p>
+
+      <!-- Bearbeiten -->
+      <form action="/pizzen/{pizza.id}" method="post">
+        <input type="hidden" name="_method" value="patch"> <!-- PATCH via POST -->
+        <label>Name: <input type="text" name="name" value="{pizza.name}"></label><br>
+        <label>Beschreibung: <input type="text" name="beschreibung" value="{pizza.beschreibung}"></label><br>
+        <label>Preis: <input type="number" name="preis" step="0.01" value="{pizza.preis}"></label><br>
+        <button type="submit">Aktualisieren</button>
+      </form>
+
+      <!-- Löschen -->
+      <form action="/admin/pizzen/{pizza.id}" method="post" style="margin-top: 0.5rem;">
+        <input type="hidden" name="_method" value="delete">
+        <button type="submit" style="background-color: red;">Löschen</button>
+      </form>
+    </div>
+  {/for}
+</div>
+
+</body>
+</html>
