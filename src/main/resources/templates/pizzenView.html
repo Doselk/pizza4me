@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Pizza4Me – Pizzen</title>
+</head>
+<body>
+<h1>🍕 Unsere Pizzen</h1>
+
+<ul>
+    {#for pizza in pizzen}
+        <li>
+            <strong>{pizza.name}</strong><br>
+            {pizza.beschreibung}<br>
+            Preis: {pizza.preis} €
+        </li>
+    {/for}
+</ul>
+</body>
+</html>
