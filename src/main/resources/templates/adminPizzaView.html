@@ -74,6 +74,54 @@
       background-color: #cd402a;
     }
 
+    textarea {
+      width: 100%;
+      resize: vertical;
+      box-sizing: border-box;
+      padding: 0.4rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+    }
+
+    .pizza-form {
+      flex: 0 0 30%;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1rem 2rem;
+      margin: 1rem 2rem;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .pizza-form label {
+      font-weight: bold;
+      margin-top: 0.5rem;
+    }
+
+    .pizza-form input,
+    .pizza-form textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+      font-size: 1rem;
+      resize: vertical;
+    }
+
+    .admin-content {
+      display: flex;
+      gap: 2rem;
+      padding: 1rem 2rem;
+      align-items: flex-start;
+    }
+
+
   </style>
 </head>
 <body>
@@ -86,15 +134,23 @@
 </nav>
 
 <h1 style="padding: 0 2rem;">Alle Pizzen verwalten</h1>
-
+<div class="admin-content">
 <!-- Pizza hinzufügen Formular -->
-<form action="/admin/pizzen/neu-pizza-hinzufuegen" method="post" style="padding: 1rem 2rem;">
+<form action="/admin/pizzen/neu-pizza-hinzufuegen" method="post" class="pizza-form">
   <h2>Neue Pizza erstellen</h2>
-  <label>Name: <input type="text" name="name" required></label><br>
-  <label>Beschreibung: <input type="text" name="beschreibung" required></label><br>
-  <label>Preis: <input type="number" name="preis" step="0.01" required></label><br>
+
+  <label for="name">Name</label>
+  <input type="text" id="name" name="name" required>
+
+  <label for="beschreibung">Beschreibung</label>
+  <textarea id="beschreibung" name="beschreibung" rows="3" required></textarea>
+
+  <label for="preis">Preis (€)</label>
+  <input type="number" id="preis" name="preis" step="0.01" required>
+
   <button type="submit">Erstellen</button>
 </form>
+
 
 <!-- Bestehende Pizzen -->
 <div class="pizzen-container">
@@ -105,10 +161,12 @@
       <p><strong>{pizza.preis} €</strong></p>
 
       <!-- Bearbeiten -->
-      <form action="/pizzen/{pizza.id}" method="post">
-        <input type="hidden" name="_method" value="patch"> <!-- PATCH via POST -->
+      <form action="/admin/pizzen/update" method="post">
+        <input type="hidden" name="id" value="{pizza.id}"> <!-- PATCH via POST -->
         <label>Name: <input type="text" name="name" value="{pizza.name}"></label><br>
-        <label>Beschreibung: <input type="text" name="beschreibung" value="{pizza.beschreibung}"></label><br>
+        <label>Beschreibung:
+          <textarea name="beschreibung" rows="3">{pizza.beschreibung}</textarea>
+        </label><br>
         <label>Preis: <input type="number" name="preis" step="0.01" value="{pizza.preis}"></label><br>
         <button type="submit">Aktualisieren</button>
       </form>
@@ -121,6 +179,6 @@
     </div>
   {/for}
 </div>
-
+</div>
 </body>
 </html>

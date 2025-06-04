@@ -1,28 +1,92 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Warenkorb</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #333;
+      margin: 2rem 0;
+      display: flex;
+      justify-content: center; /* body als flex-container */
+    }
+
+    .container {
+      max-width: 400px;
+      width: 100%;
+      padding: 1rem 2rem;
+      box-sizing: border-box;
+      text-align: left; /* Text linksbündig */
+    }
+
+    h1 {
+      color: #ff6347;
+      margin-bottom: 1rem;
+      text-align: center; /* Überschrift zentriert */
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 1rem;
+    }
+
+    li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+      font-size: 1rem;
+    }
+
+    p strong {
+      font-size: 1.2rem;
+      color: #ff6347;
+    }
+
+    form button {
+      background-color: #ff6347;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background-color 0.3s ease;
+      display: block;
+      width: 100%;
+    }
+
+    form button:hover {
+      background-color: #e5533d;
+    }
+
+    .empty-message {
+      font-style: italic;
+      color: #777;
+    }
+  </style>
 </head>
 <body>
-<h1>🛒 Dein Warenkorb</h1>
+<div class="container">
+  <h1>🛒 Dein Warenkorb</h1>
 
-{#if bestellung != null && bestellung.bestellposten.size > 0}
-  <ul>
-    {#for posten in bestellung.bestellposten}
-      <li>{posten.pizza.name} × {posten.menge} – {posten.getGesamtpreis()} €</li>
-    {/for}
-  </ul>
-  <p><strong>Gesamt: {bestellung.summe} €</strong></p>
-  <form action="/bestellung/abschliessen" method="post">
-    <button type="submit">Bestellung abschließen</button>
+  {#if bestellung != null && bestellung.bestellposten.size > 0}
+    <ul>
+      {#for posten in bestellung.bestellposten}
+        <li>{posten.pizza.name} × {posten.menge} – {posten.getGesamtpreis()} €</li>
+      {/for}
+    </ul>
+    <p><strong>Gesamt: {bestellung.summe} €</strong></p>
+    <form action="/bestellung/abschliessen" method="post">
+      <button type="submit">Bestellung abschließen</button>
+    </form>
+  {/if}
+
+  <form action="/pizzen/ui" method="get">
+    <button type="submit">Zurück zu den Pizzen</button>
   </form>
-{:else}
-<p>Dein Warenkorb ist leer.</p>
-{/if}
-
-<form action="/pizzen/ui" method="get">
-  <button type="submit">Zurück zu den Pizzen</button>
-</form>
+</div>
 </body>
 </html>

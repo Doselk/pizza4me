@@ -1,6 +1,7 @@
 package de.hsos.gui;
 
 import de.hsos.boundary.dto.NeuPizzaDTO;
+import de.hsos.boundary.dto.UpdatePizzaDTO;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.annotation.security.RolesAllowed;
@@ -57,6 +58,29 @@ public class AdminPizzaGuiResource {
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("Fehler beim Erstellen der Pizza: " + e.getMessage())
+                    .build();
+        }
+    }
+
+    @POST
+    @Path("/update")
+    @Transactional
+    public Response patchPizza(@FormParam("id") Long id,
+                               @FormParam("name") String name,
+                               @FormParam("beschreibung") String beschreibung,
+                               @FormParam("preis") BigDecimal preis){
+        try {
+            UpdatePizzaDTO updateDTO = new UpdatePizzaDTO(name, preis, beschreibung);
+            boolean aktualisiert = pizzenVerwalter.aktualisierePizza(id, updateDTO);
+            if (!aktualisiert) {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Pizza mit ID " + id + " nicht gefunden.")
+                        .build();
+            }
+            return Response.seeOther(URI.create("/admin/pizzen")).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Fehler beim Aktualisieren der Pizza: " + e.getMessage())
                     .build();
         }
     }
