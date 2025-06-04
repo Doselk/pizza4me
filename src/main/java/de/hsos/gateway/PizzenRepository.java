@@ -28,8 +28,9 @@ public class PizzenRepository implements PizzenVerwalter {
 
     @Override
     public boolean entfernenPizza(Long id) {
-        Pizza pizza = em.createQuery("SELECT p FROM Pizza p WHERE p.id = id", Pizza.class)
-                        .getSingleResult();
+        Pizza pizza = em.createQuery("SELECT p FROM Pizza p WHERE p.id = :id", Pizza.class)
+                .setParameter("id", id)
+                .getSingleResult();
         if (pizza != null) {
             em.remove(pizza);
             return true;

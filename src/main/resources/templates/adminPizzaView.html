@@ -56,7 +56,21 @@
       cursor: pointer;
     }
 
+    button {
+      margin-top: 0.5rem;
+      padding: 0.4rem 1rem;
+      background-color: #ff6347;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
     .pizza-card button:hover {
+      background-color: #e5533d;
+    }
+
+    button:hover {
       background-color: #e5533d;
     }
 
@@ -100,8 +114,8 @@
       </form>
 
       <!-- Löschen -->
-      <form action="/admin/pizzen/{pizza.id}" method="post" style="margin-top: 0.5rem;">
-        <input type="hidden" name="_method" value="delete">
+      <form action="/admin/pizzen/delete" method="post" style="margin-top: 0.5rem;">
+        <input type="hidden" name="id" value="{pizza.id}">
         <button type="submit" style="background-color: red;">Löschen</button>
       </form>
     </div>
