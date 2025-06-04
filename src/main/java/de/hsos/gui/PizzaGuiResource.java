@@ -4,6 +4,7 @@ import de.hsos.boundary.dto.PizzaDTO;
 import de.hsos.control.PizzenVerwalter;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
+import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -19,6 +20,9 @@ public class PizzaGuiResource {
     @Inject
     PizzenVerwalter pizzenVerwalter;
 
+    @Inject
+    SecurityIdentity securityIdentity;
+
     @GET
     public TemplateInstance zeigeAllePizzen() {
         List<PizzaDTO> pizzaDTOs = pizzenVerwalter.getAllePizzen()
@@ -26,6 +30,9 @@ public class PizzaGuiResource {
                 .map(PizzaDTO::toDTO)
                 .toList();
 
-        return pizzenView.data("pizzen", pizzaDTOs);
+        String userName = securityIdentity.getPrincipal().getName();  // aktueller Username
+
+        return pizzenView.data("pizzen", pizzaDTOs)
+                .data("userName", userName);
     }
 }

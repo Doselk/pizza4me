@@ -4,11 +4,34 @@
     <meta charset="UTF-8">
     <title>Pizza4Me – Pizzen</title>
     <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        nav {
+            background-color: #ff6347;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        nav .user-info {
+            font-size: 1rem;
+        }
+
         .pizzen-container {
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
-            padding: 1rem;
+            padding: 1rem 2rem;
         }
 
         .pizza-card {
@@ -39,7 +62,16 @@
     </style>
 </head>
 <body>
-<h1>🍕 Unsere Pizzen</h1>
+
+<nav>
+    <div class="logo">Pizza4Me</div>
+    <div class="user-info">Angemeldet als: {userName}</div>
+    <form action="/logout" method="post" style="margin:0;">
+        <button type="submit">Abmelden</button>
+    </form>
+</nav>
+
+<h1 style="padding: 0 2rem;">🍕 Unsere Pizzen</h1>
 
 <div class="pizzen-container">
     {#for pizza in pizzen}
