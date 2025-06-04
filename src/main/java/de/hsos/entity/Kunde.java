@@ -15,6 +15,7 @@ public class Kunde {
     private Long id;
     private String vorname;
     private String nachname;
+    private String email;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Adresse adresse;
@@ -25,14 +26,16 @@ public class Kunde {
     public Kunde() {
     }
 
-    public Kunde(String vorname, String nachname) {
+    public Kunde(String vorname, String nachname, String email) {
         this.vorname = vorname;
         this.nachname = nachname;
+        this.email = email;
     }
 
-    public Kunde(String vorname, String nachname, Adresse adresse) {
+    public Kunde(String vorname, String nachname, String email, Adresse adresse) {
         this.vorname = vorname;
         this.nachname = nachname;
+        this.email = email;
         this.adresse = adresse;
     }
 
@@ -54,5 +57,13 @@ public class Kunde {
 
     public Adresse getAdresse() {
         return adresse;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

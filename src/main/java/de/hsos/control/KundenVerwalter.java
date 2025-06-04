@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface KundenVerwalter {
-    long neuenKundenAnlegen(String vorname, String nachname, String strasse, String plz, String ort, Integer hausnummer);
+    long neuenKundenAnlegen(String vorname, String nachname, String passwort, String strasse, String plz, String ort, Integer hausnummer, String email);
     boolean kundeEntfernen(String id);
     Optional<Kunde> findeKundeMitId(long id);
     Collection<Kunde> findeAlleKunden();

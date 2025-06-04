@@ -1,6 +1,12 @@
--- This file allow to write SQL commands that will be emitted in test and dev.
--- The commands are commented as their support depends of the database
--- insert into myentity (id, field) values(1, 'field-1');
--- insert into myentity (id, field) values(2, 'field-2');
--- insert into myentity (id, field) values(3, 'field-3');
--- alter sequence myentity_seq restart with 4;
+INSERT INTO Pizza (id, name, beschreibung, preis) VALUES (1, 'Margherita', 'Klassiker mit Mozzarella', 7.50);
+INSERT INTO Pizza (id, name, beschreibung, preis) VALUES (2, 'Salami', 'Mit scharfer Rindersalami', 8.90);
+INSERT INTO Pizza (id, name, beschreibung, preis) VALUES (3, 'Funghi', 'Mit frischen Pilzen', 8.20);
+INSERT INTO Pizza (id, name, beschreibung, preis) VALUES (4, 'Hawaii', 'Mit Schinken und Ananas', 9.50);
+INSERT INTO Role(name) VALUES ('KundIn');
+INSERT INTO Role(name) VALUES ('NutzerIn');
+INSERT INTO Role(name) VALUES ('Admin');
+
+
+-- ODER: mit Adresse (falls Du Adresse setzen möchtest)
+INSERT INTO kunde(vorname, nachname, email)
+VALUES ('admin', 'admin', 'admin');

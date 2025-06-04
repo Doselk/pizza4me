@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.jboss.logging.Logger;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -23,13 +24,20 @@ public class KundenRepository implements KundenVerwalter {
 
     @Override
     @Transactional
-    public long neuenKundenAnlegen(String vorname, String nachname, String strasse, String plz, String ort, Integer hausnummer) {
+    public long neuenKundenAnlegen(String vorname, String nachname, String passwort, String strasse, String plz, String ort, Integer hausnummer, String email) {
         Adresse adresse = null;
         if (strasse != null && plz != null && ort != null && hausnummer != null) {
             adresse = new Adresse(strasse, plz, ort, hausnummer);
         }
-        Kunde kunde = new Kunde(vorname, nachname, adresse);
+        Kunde kunde = new Kunde(vorname, nachname, email,  adresse);
         em.persist(kunde);
+
+        try {
+            de.hsos.util.UserPropertiesWriter.addUser(email, passwort, "KundIn");
+        } catch (IOException e) {
+            e.printStackTrace(); // Im echten Code besser loggen
+        }
+
         return kunde.getId();
     }
 

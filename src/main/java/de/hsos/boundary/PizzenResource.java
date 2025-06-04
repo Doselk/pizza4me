@@ -4,6 +4,8 @@ import de.hsos.boundary.dto.NeuPizzaDTO;
 import de.hsos.boundary.dto.PizzaDTO;
 import de.hsos.boundary.dto.UpdatePizzaDTO;
 import de.hsos.control.PizzenVerwalter;
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -24,6 +26,7 @@ public class PizzenResource {
     PizzenVerwalter pizzenVerwalter;
 
     @GET
+    @PermitAll
     @Operation(summary = "Alle Pizzen abrufen")
     public Response getAllPizzen(){
         Collection<PizzaDTO> pizzen = pizzenVerwalter.getAllePizzen()
@@ -35,6 +38,7 @@ public class PizzenResource {
 
     @GET
     @Path("/{id}")
+    @PermitAll
     @Operation(summary = "Pizza mit ID abrufen")
     public Response getPizzenById(@PathParam("id") Long id){
         PizzaDTO pizzaDTO = pizzenVerwalter.getPizzaById(id)
@@ -47,6 +51,7 @@ public class PizzenResource {
     }
 
     @POST
+    @RolesAllowed("Admin")
     @Operation(summary = "Neue Pizza anlegen")
     public Response createPizza(NeuPizzaDTO neuPizzaDTO){
         try {
@@ -72,6 +77,7 @@ public class PizzenResource {
 
     @PATCH
     @Path("/{id}")
+    @RolesAllowed("Admin")
     @Operation(summary = "Pizza aktualisieren")
     public Response patchPizza(@PathParam("id") Long id, UpdatePizzaDTO updateDTO){
         try {
@@ -92,6 +98,7 @@ public class PizzenResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed("Admin")
     @Operation(summary = "Pizza Löschen")
     public Response deletePizza(@PathParam("id") Long id){
         try {
