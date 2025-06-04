@@ -37,6 +37,7 @@ public class PizzaGuiResource {
     SecurityIdentity securityIdentity;
 
     @GET
+    @RolesAllowed("KundIn")
     public TemplateInstance zeigeAllePizzen() {
         List<PizzaDTO> pizzaDTOs = pizzenVerwalter.getAllePizzen()
                 .stream()
