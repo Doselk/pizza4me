@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login</title>
 </head>
 <body>
-<form action="/login" method="post">
-    <input name="username" placeholder="Benutzername">
-    <input name="password" type="password" placeholder="Passwort">
+<h1>Login</h1>
+<form action="/pizzen/ui" method="post">
+    <label>Benutzername: <input name="username" type="text"/></label><br/>
+    <label>Passwort: <input name="password" type="password"/></label><br/>
     <button type="submit">Login</button>
+    {#if error}
+        <p style="color:red;">Login fehlgeschlagen</p>
+    {/if}
 </form>
 </body>
 </html>
