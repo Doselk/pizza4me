@@ -45,7 +45,7 @@ public class BestellungenRepository implements BestellungenVerwalter {
         if (bestellung != null) {
             Bestellposten neuerPosten = new Bestellposten(pizza, menge, bestellung);
             bestellung.addBestellposten(neuerPosten);
-            em.persist(neuerPosten);
+            em.persist(bestellung);
         } else {
             throw new IllegalArgumentException("Bestellung mit ID " + bestellId + " nicht gefunden.");
         }

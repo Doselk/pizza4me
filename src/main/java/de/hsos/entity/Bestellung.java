@@ -1,5 +1,6 @@
 package de.hsos.entity;
 
+import de.hsos.boundary.dto.BestellungDTO;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -62,9 +63,24 @@ public class Bestellung {
 
     public void addBestellposten(Bestellposten bestellposten) {
         if (bestellposten != null) {
-            this.bestellposten.add(bestellposten);
             bestellposten.setBestellung(this);
+            this.bestellposten.add(bestellposten);
         }
     }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    //toDTO
+    public BestellungDTO toDTO() {
+        return new BestellungDTO(
+                id,
+                kunde,
+                status,
+                bestellposten.stream()
+                        .map(Bestellposten::toDTO)
+                        .toList()
+        );
+    }
 }

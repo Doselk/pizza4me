@@ -1,5 +1,6 @@
 package de.hsos.entity;
 
+import de.hsos.boundary.dto.PizzaDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -51,5 +52,10 @@ public class Pizza {
 
     public void setBeschreibung(String beschreibung) {
         this.beschreibung = beschreibung;
+    }
+
+    //toDTO
+    public PizzaDTO toDTO() {
+        return new PizzaDTO(id, name, preis, beschreibung);
     }
 }
