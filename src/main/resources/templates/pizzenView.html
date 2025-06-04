@@ -59,6 +59,7 @@
         .pizza-card button:hover {
             background-color: #e5533d;
         }
+
     </style>
 </head>
 <body>
@@ -66,6 +67,9 @@
 <nav>
     <div class="logo">Pizza4Me</div>
     <div class="user-info">Angemeldet als: {userName}</div>
+    <form action="/pizzen/ui/warenkorb" method="get" style="display:inline;">
+        <button type="submit">🛒 Warenkorb</button>
+    </form>
     <form action="/logout" method="post" style="margin:0;">
         <button type="submit">Abmelden</button>
     </form>
@@ -80,13 +84,18 @@
             <p>{pizza.beschreibung}</p>
             <p><strong>{pizza.preis} €</strong></p>
 
-            <form action="/bestellung" method="post">
+            <form action="/pizzen/ui/pizza-hinzufuegen" method="post">
                 <input type="hidden" name="pizzaId" value="{pizza.id}">
+                <input type="hidden" name="bestellId" value="{bestellId}">
+                <label for="menge-{pizza.id}">Menge:</label>
+                <input type="number" id="menge-{pizza.id}" name="menge" min="1" value="1" style="width: 60px;" required>
+
                 <button type="submit">Hinzufügen</button>
             </form>
         </div>
     {/for}
 </div>
+
 
 </body>
 </html>

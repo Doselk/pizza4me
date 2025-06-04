@@ -14,4 +14,5 @@ public interface KundenVerwalter {
     boolean adresseSetzen(long kundenId, Adresse adresse);
 
 
+    Optional<Kunde> findeKundeMitEmail(String email);
 }

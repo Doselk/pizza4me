@@ -1,18 +1,14 @@
 package de.hsos.gateway;
 
-import de.hsos.boundary.dto.BestellungDTO;
-import de.hsos.boundary.dto.NeuPizzaDTO;
 import de.hsos.control.BestellungenVerwalter;
-import de.hsos.entity.Bestellposten;
-import de.hsos.entity.Bestellung;
-import de.hsos.entity.Kunde;
-import de.hsos.entity.Pizza;
+import de.hsos.control.KundenVerwalter;
+import de.hsos.entity.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -60,4 +56,36 @@ public class BestellungenRepository implements BestellungenVerwalter {
     public Collection<Bestellung> getAllBestellungen() {
         return em.createQuery("select b from Bestellung b", Bestellung.class).getResultList();
     }
+
+    @Override
+    public Bestellung getOffeneBestellungVon(String email) {
+        return em.createQuery(
+                        "SELECT b FROM Bestellung b WHERE b.kunde.email = :email AND b.status = :status",
+                        Bestellung.class
+                )
+                .setParameter("email", email)
+                .setParameter("status", Status.IN_BEARBEITUNG)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Inject
+    KundenVerwalter kundenVerwalter;
+
+    @Transactional
+    public Bestellung getOderErstelleOffeneBestellung(String email) {
+        Optional<Bestellung> b = Optional.ofNullable(this.getOffeneBestellungVon(email));
+        if (b.isEmpty()) {
+            Optional<Kunde> kunde = kundenVerwalter.findeKundeMitEmail(email);
+            if (kunde.isEmpty()) {
+                throw new IllegalStateException("Kein Kunde mit E-Mail " + email + " gefunden");
+            }
+            long kundenId = kunde.get().getId();
+            long bestellId = this.bestellungAnlegen(kundenId);
+            b = this.getBestellungById(bestellId);
+        }
+        return b.get();
+    }
+
 }

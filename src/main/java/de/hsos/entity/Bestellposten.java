@@ -87,4 +87,8 @@ public class Bestellposten {
         );
     }
 
+    public BigDecimal getGesamtpreis() {
+        return einzelpreis.multiply(BigDecimal.valueOf(menge));
+    }
+
 }

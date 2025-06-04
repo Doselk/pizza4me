@@ -27,4 +27,7 @@ public interface BestellungenVerwalter {
 
     Optional<Bestellung> getBestellungById(Long bestellId);
     Collection<Bestellung> getAllBestellungen();
+    Bestellung getOffeneBestellungVon(String email);
+
+    Bestellung getOderErstelleOffeneBestellung(String email);
 }

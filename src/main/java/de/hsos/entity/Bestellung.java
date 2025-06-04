@@ -1,11 +1,14 @@
 package de.hsos.entity;
 
+import de.hsos.boundary.dto.BestellpostenDTO;
 import de.hsos.boundary.dto.BestellungDTO;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Bestellung {
@@ -82,5 +85,11 @@ public class Bestellung {
                         .map(Bestellposten::toDTO)
                         .toList()
         );
+    }
+
+    public BigDecimal getSumme() {
+        return bestellposten.stream()
+                .map(Bestellposten::getGesamtpreis)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

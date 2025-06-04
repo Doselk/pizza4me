@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Warenkorb</title>
+</head>
+<body>
+<h1>🛒 Dein Warenkorb</h1>
+
+{#if bestellung != null && bestellung.bestellposten.size > 0}
+  <ul>
+    {#for posten in bestellung.bestellposten}
+      <li>{posten.pizza.name} × {posten.menge} – {posten.getGesamtpreis()} €</li>
+    {/for}
+  </ul>
+  <p><strong>Gesamt: {bestellung.summe} €</strong></p>
+  <form action="/bestellung/abschliessen" method="post">
+    <button type="submit">Bestellung abschließen</button>
+  </form>
+{:else}
+<p>Dein Warenkorb ist leer.</p>
+{/if}
+
+<form action="/pizzen/ui" method="get">
+  <button type="submit">Zurück zu den Pizzen</button>
+</form>
+</body>
+</html>

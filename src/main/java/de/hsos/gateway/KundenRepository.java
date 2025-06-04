@@ -78,4 +78,16 @@ public class KundenRepository implements KundenVerwalter {
         return true;
     }
 
+    @Override
+
+    public Optional<Kunde> findeKundeMitEmail(String email) {
+        List<Kunde> kunden = em.createQuery("SELECT k FROM Kunde k WHERE k.email = :email", Kunde.class)
+                .setParameter("email", email)
+                .getResultList();
+        if (kunden.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(kunden.get(0));
+    }
+
 }

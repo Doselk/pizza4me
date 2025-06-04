@@ -6,3 +6,5 @@ INSERT INTO Pizza (id, name, beschreibung, preis) VALUES (4, 'Hawaii', 'Mit Schi
 -- ODER: mit Adresse (falls Du Adresse setzen möchtest)
 INSERT INTO kunde(vorname, nachname, email)
 VALUES ('admin', 'admin', 'admin');
+INSERT INTO kunde(vorname, nachname, email)
+VALUES ('kunde', 'kunde', 'kunde');
