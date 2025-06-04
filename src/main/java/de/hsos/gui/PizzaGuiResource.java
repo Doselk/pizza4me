@@ -4,6 +4,7 @@ import de.hsos.boundary.dto.PizzaDTO;
 import de.hsos.control.BestellungenVerwalter;
 import de.hsos.control.PizzenVerwalter;
 import de.hsos.entity.Bestellung;
+import de.hsos.entity.Status;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import io.quarkus.security.identity.SecurityIdentity;
@@ -51,8 +52,6 @@ public class PizzaGuiResource {
                 .data("pizzen", pizzaDTOs)
                 .data("userName", userName)
                 .data("bestellId", bestellung.getId());
-
-
     }
 
     @POST
@@ -75,4 +74,21 @@ public class PizzaGuiResource {
         Bestellung bestellung = bestellVerwalter.getOffeneBestellungVon(userEmail);
         return warenkorbView.data("bestellung", bestellung);
     }
+
+    @POST
+    @Path("/warenkorb/abschliessen")
+    @Transactional
+    public Response bestellungAbschliessen() {
+        String email = securityIdentity.getPrincipal().getName();
+
+        Bestellung bestellung = bestellVerwalter.getOffeneBestellungVon(email);
+        if (bestellung == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Keine offene Bestellung").build();
+        }
+
+        bestellVerwalter.bestellen(bestellung);
+
+        return Response.seeOther(URI.create("/pizzen/ui")).build(); // zurück zur Hauptseite
+    }
+
 }

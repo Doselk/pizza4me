@@ -60,11 +60,12 @@ public class BestellungenRepository implements BestellungenVerwalter {
     @Override
     public Bestellung getOffeneBestellungVon(String email) {
         return em.createQuery(
-                        "SELECT b FROM Bestellung b WHERE b.kunde.email = :email AND b.status = :status",
+                        "SELECT b FROM Bestellung b WHERE b.kunde.email = :email AND b.status IN (:status1, :status2)",
                         Bestellung.class
                 )
                 .setParameter("email", email)
-                .setParameter("status", Status.IN_BEARBEITUNG)
+                .setParameter("status1", Status.IN_BEARBEITUNG)
+                .setParameter("status2", Status.OFFEN)
                 .getResultStream()
                 .findFirst()
                 .orElse(null);
@@ -86,6 +87,18 @@ public class BestellungenRepository implements BestellungenVerwalter {
             b = this.getBestellungById(bestellId);
         }
         return b.get();
+    }
+
+    @Override
+    public void bestellen(Bestellung bestellung) {
+        if (bestellung == null) {
+            throw new IllegalArgumentException("Bestellung darf nicht null sein");
+        }
+        if (bestellung.getStatus() != Status.IN_BEARBEITUNG) {
+            throw new IllegalStateException("Bestellung kann nur im Status IN_BEARBEITUNG abgeschlossen werden");
+        }
+        bestellung.bestellen();
+        em.merge(bestellung);
     }
 
 }

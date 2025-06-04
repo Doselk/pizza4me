@@ -30,4 +30,5 @@ public interface BestellungenVerwalter {
     Bestellung getOffeneBestellungVon(String email);
 
     Bestellung getOderErstelleOffeneBestellung(String email);
+    void bestellen(Bestellung bestellung);
 }
