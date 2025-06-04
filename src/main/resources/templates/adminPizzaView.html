@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin – Pizzen verwalten</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    nav {
+      background-color: #ff6347;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    nav .user-info {
+      font-size: 1rem;
+    }
+
+    .pizzen-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem 2rem;
+    }
+
+    .pizza-card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1rem;
+      width: 250px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .pizza-card h2 {
+      margin-top: 0;
+    }
+
+    .pizza-card button {
+      margin-top: 0.5rem;
+      padding: 0.4rem 1rem;
+      background-color: #ff6347;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button {
+      margin-top: 0.5rem;
+      padding: 0.4rem 1rem;
+      background-color: #f1563b;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .pizza-card button:hover {
+      background-color: #e5533d;
+    }
+
+    button:hover {
+      background-color: #cd402a;
+    }
+
+    textarea {
+      width: 100%;
+      resize: vertical;
+      box-sizing: border-box;
+      padding: 0.4rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+    }
+
+    .pizza-form {
+      flex: 0 0 30%;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1rem 2rem;
+      margin: 1rem 2rem;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .pizza-form label {
+      font-weight: bold;
+      margin-top: 0.5rem;
+    }
+
+    .pizza-form input,
+    .pizza-form textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+      font-size: 1rem;
+      resize: vertical;
+    }
+
+    .admin-content {
+      display: flex;
+      gap: 2rem;
+      padding: 1rem 2rem;
+      align-items: flex-start;
+    }
+
+
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Pizza4Me (Admin)</div>
+  <form action="/logout" method="get">
+    <button type="submit">Abmelden</button>
+  </form>
+</nav>
+
+<h1 style="padding: 0 2rem;">Alle Pizzen verwalten</h1>
+<div class="admin-content">
+<!-- Pizza hinzufügen Formular -->
+<form action="/admin/pizzen/neu-pizza-hinzufuegen" method="post" class="pizza-form">
+  <h2>Neue Pizza erstellen</h2>
+
+  <label for="name">Name</label>
+  <input type="text" id="name" name="name" required>
+
+  <label for="beschreibung">Beschreibung</label>
+  <textarea id="beschreibung" name="beschreibung" rows="3" required></textarea>
+
+  <label for="preis">Preis (€)</label>
+  <input type="number" id="preis" name="preis" step="0.01" required>
+
+  <button type="submit">Erstellen</button>
+</form>
+
+
+<!-- Bestehende Pizzen -->
+<div class="pizzen-container">
+  {#for pizza in pizzen}
+    <div class="pizza-card">
+      <h2>{pizza.name}</h2>
+      <p>{pizza.beschreibung}</p>
+      <p><strong>{pizza.preis} €</strong></p>
+
+      <!-- Bearbeiten -->
+      <form action="/admin/pizzen/update" method="post">
+        <input type="hidden" name="id" value="{pizza.id}"> <!-- PATCH via POST -->
+        <label>Name: <input type="text" name="name" value="{pizza.name}"></label><br>
+        <label>Beschreibung:
+          <textarea name="beschreibung" rows="3">{pizza.beschreibung}</textarea>
+        </label><br>
+        <label>Preis: <input type="number" name="preis" step="0.01" value="{pizza.preis}"></label><br>
+        <button type="submit">Aktualisieren</button>
+      </form>
+
+      <!-- Löschen -->
+      <form action="/admin/pizzen/delete" method="post" style="margin-top: 0.5rem;">
+        <input type="hidden" name="id" value="{pizza.id}">
+        <button type="submit" style="background-color: red;">Löschen</button>
+      </form>
+    </div>
+  {/for}
+</div>
+</div>
+</body>
+</html>
