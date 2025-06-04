@@ -67,14 +67,11 @@ public class AdminPizzaGuiResource {
     public Response loeschePizza(@FormParam("id") Long id) {
         try {
             boolean geloescht = pizzenVerwalter.entfernenPizza(id);
-            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+geloescht);
             if (!geloescht) {
-                System.out.print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 return Response.status(Response.Status.NOT_FOUND)
                         .entity("Pizza mit ID " + id + " nicht gefunden.")
                         .build();
             }
-            System.out.println("jajajajajajajajajajajajajajajajajajajajajaja");
             return Response.seeOther(URI.create("/admin/pizzen")).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)

@@ -56,8 +56,22 @@
             cursor: pointer;
         }
 
+        button {
+            margin-top: 0.5rem;
+            padding: 0.4rem 1rem;
+            background-color: #f1563b;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
         .pizza-card button:hover {
             background-color: #e5533d;
+        }
+
+        button:hover {
+            background-color: #cd402a;
         }
 
     </style>
@@ -68,7 +82,7 @@
     <div class="logo">Pizza4Me</div>
     <div class="user-info">Angemeldet als: {userName}</div>
     <form action="/pizzen/ui/warenkorb" method="get" style="display:inline;">
-        <button type="submit">🛒 Warenkorb</button>
+        <button type="submit">Warenkorb</button>
     </form>
     <form action="/logout" method="get">
         <button type="submit">Abmelden</button>
