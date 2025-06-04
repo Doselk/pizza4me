@@ -70,12 +70,12 @@
     <form action="/pizzen/ui/warenkorb" method="get" style="display:inline;">
         <button type="submit">🛒 Warenkorb</button>
     </form>
-    <form action="/logout" method="post" style="margin:0;">
+    <form action="/logout" method="get">
         <button type="submit">Abmelden</button>
     </form>
 </nav>
 
-<h1 style="padding: 0 2rem;">🍕 Unsere Pizzen</h1>
+<h1 style="padding: 0 2rem;">Unsere Pizzen</h1>
 
 <div class="pizzen-container">
     {#for pizza in pizzen}
