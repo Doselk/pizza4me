@@ -3,18 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>Pizza4Me – Pizzen</title>
+    <style>
+        .pizzen-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .pizza-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 1rem;
+            width: 250px;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .pizza-card h2 {
+            margin-top: 0;
+        }
+
+        .pizza-card button {
+            margin-top: 0.5rem;
+            padding: 0.4rem 1rem;
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .pizza-card button:hover {
+            background-color: #e5533d;
+        }
+    </style>
 </head>
 <body>
 <h1>🍕 Unsere Pizzen</h1>
 
-<ul>
+<div class="pizzen-container">
     {#for pizza in pizzen}
-        <li>
-            <strong>{pizza.name}</strong><br>
-            {pizza.beschreibung}<br>
-            Preis: {pizza.preis} €
-        </li>
+        <div class="pizza-card">
+            <h2>{pizza.name}</h2>
+            <p>{pizza.beschreibung}</p>
+            <p><strong>{pizza.preis} €</strong></p>
+
+            <form action="/bestellung" method="post">
+                <input type="hidden" name="pizzaId" value="{pizza.id}">
+                <button type="submit">Hinzufügen</button>
+            </form>
+        </div>
     {/for}
-</ul>
+</div>
+
 </body>
 </html>
